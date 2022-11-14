@@ -1,0 +1,25 @@
+﻿@model Og.Commerce.Application.Localization.LanguageDto
+@{
+    ViewData["Title"] = "Yeni Dil Ekle";
+}
+
+<form class="card" method="post">
+    <div class="card-body">
+        <div class="mb-3 row">
+            <label asp-for="Name" class="col-md-3 col-form-label required"></label>
+            <div class="col">
+                <input asp-for="Name" class="form-control" placeholder="Dil Adı">
+                <small class="form-hint">We'll never share your email with anyone else.</small>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label asp-for="CultureName" class="col-md-3 col-form-label required"></label>
+            <div class="col">
+                <select asp-for="CultureName" class="form-select select-tags" placeholder="Select a culture" asp-items="@SelectListUtility.GetCultures()"></select>
+            </div>
+        </div>
+    </div>
+
+
+</form>

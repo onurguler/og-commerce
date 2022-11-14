@@ -1,10 +1,14 @@
+using Og.Commerce.Application.Localization;
 using Og.Commerce.Infrastructure;
+using Og.Commerce.Web.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddScoped<LanguageService>();
+builder.Services.AddScoped<SelectListUtility>();
 
 var app = builder.Build();
 
@@ -22,6 +26,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

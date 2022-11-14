@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Og.Commerce.Web</title>
+    <link rel="stylesheet" href="~/css/site.bundle.min.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="page">
+        <partial name="_Navbar" />
+
+        <div class="page-wrapper">
+            <div class="page-header d-print-none">
+                <div class="container-xl">
+                    <div class="row align-items-center mw-100">
+                        <div class="col">
+                            <div class="mb-1">
+                                <ol class="breadcrumb" aria-label="breadcrumbs">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"><a href="#">Articles</a></li>
+                                </ol>
+                            </div>
+                            <h2 class="page-title">
+                                <span class="text-truncate">@ViewData["Title"]</span>
+                            </h2>
+                        </div>
+                        <div class="col-auto">
+                            <div class="btn-list">
+                                @await RenderSectionAsync("PageHeaderButtons", false)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Page body -->
+            <div class="page-body">
+                <div class="container-xl">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+
+        <partial name="_Footer" />
+    </div>
+    <script src="~/js/site.bundle.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

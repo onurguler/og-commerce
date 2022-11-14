@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Og.Commerce.Domain.Localization;
 using Og.Commerce.Infrastructure.Persistence.DataContexts;
 
@@ -60,4 +61,22 @@ public class LanguageService
         await _context.SaveChangesAsync();
         return entity;
     }
+
+    #region [ Utilities ]
+
+    public List<CultureDto> GetCultures()
+            => System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.SpecificCultures)
+                        .OrderBy(x => x.EnglishName)
+                        .Select(x => new CultureDto
+                        {
+                            DisplayName = x.DisplayName,
+                            TwoLetterISOLanguageName = x.TwoLetterISOLanguageName,
+                            Name = x.Name,
+                            EnglishName = x.EnglishName,
+                            IetfLanguageTag = x.IetfLanguageTag,
+                            NativeName = x.NativeName,
+                            ThreeLetterISOLanguageName = x.ThreeLetterISOLanguageName
+                        }).ToList();
+
+    #endregion
 }

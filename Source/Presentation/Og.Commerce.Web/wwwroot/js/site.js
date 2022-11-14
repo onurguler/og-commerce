@@ -21,3 +21,27 @@ $(function () {
         document.body.classList.add("theme-".concat(t));
     }
 });
+
+// Select lists
+$(function () {
+    window.TomSelect && $(".select-tags").length && (new TomSelect(".select-tags", {
+        copyClassesToDropdown: false,
+        dropdownClass: 'dropdown-menu ts-dropdown',
+        optionClass: 'dropdown-item',
+        controlInput: '<input>',
+        render: {
+            item: function (data, escape) {
+                if (data.customProperties) {
+                    return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                }
+                return '<div>' + escape(data.text) + '</div>';
+            },
+            option: function (data, escape) {
+                if (data.customProperties) {
+                    return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                }
+                return '<div>' + escape(data.text) + '</div>';
+            },
+        },
+    }));
+});
