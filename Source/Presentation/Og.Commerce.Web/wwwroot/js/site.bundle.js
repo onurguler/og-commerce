@@ -481,6 +481,7 @@ $(function () {
 // Select lists
 $(function () {
     window.TomSelect && $(".select-tags").length && (new TomSelect(".select-tags", {
+        maxOptions: Number.MAX_SAFE_INTEGER,
         copyClassesToDropdown: false,
         dropdownClass: 'dropdown-menu ts-dropdown',
         optionClass: 'dropdown-item',
