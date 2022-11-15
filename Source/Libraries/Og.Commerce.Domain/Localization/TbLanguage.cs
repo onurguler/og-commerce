@@ -12,9 +12,6 @@ public class TbLanguage
     [MaxLength(100)]
     public string Name { get; set; } = default!;
 
-    [MaxLength(100)]
-    public string NativeName { get; set; } = default!;
-
     [MaxLength(5)]
     public string CultureName { get; set; } = default!;
 

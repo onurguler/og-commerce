@@ -1,8 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Og.Commerce.Domain.Localization;
+using Og.Commerce.Application.Localization;
 
 namespace Og.Commerce.Api.Controllers.Localization
 {
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LanguagesController : ControllerBase
+    {
+        private readonly LanguageService _languageService;
+
+        public LanguagesController(LanguageService languageService)
+        {
+            _languageService = languageService;
+        }
+
+        [HttpGet("cultures")]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        public ActionResult<List<CultureDto>> GetCultures() => _languageService.GetCultures();
+    }
+
     //[Route("api/[controller]")]
     //[ApiController]
     //public class LanguagesController : ControllerBase
