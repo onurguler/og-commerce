@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Og.Commerce.Infrastructure.Persistence;
+namespace Og.Commerce.Data;
 
 public class DatabaseConfig : IValidatableObject
 {

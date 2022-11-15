@@ -1,66 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Og.Commerce.Domain.Localization;
-using Og.Commerce.Infrastructure.Persistence.DataContexts;
+﻿using Og.Commerce.Domain.Localization;
+using Og.Commerce.Core.Application;
+using Og.Commerce.Data.DbContexts;
+using Og.Commerce.Core.Data.Repositories;
+using Og.Commerce.Core.Domain;
 
 namespace Og.Commerce.Application.Localization;
 
-public class LanguageService
+public class LanguageService : ApplicationService<ApplicationDbContext>
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IRepository<TbLanguage> _languageRepository;
 
-    public LanguageService(ApplicationDbContext context)
+    public LanguageService()
     {
-        _context = context;
+        _languageRepository = UnitOfWork.GetRepository<TbLanguage>();
     }
 
-    public async Task<TbLanguage?> GetByIdAsync(Guid id)
-    {
-        var entity = await _context.TbLanguages.FindAsync(id);
-        return entity;
-    }
+    public async Task<TbLanguage?> GetByIdAsync(Guid id) => await _languageRepository.GetAsync(id);
 
-    public async Task<List<TbLanguage>> GetPagedListAsync(int page = 1, int limit = 10, bool publishedOnly = true)
-    {
-        var query = _context.TbLanguages.AsNoTracking();
-        if (publishedOnly)
-            query = query.Where(w => w.Published);
+    public async Task<IPagedList<TbLanguage>> GetPagedListAsync(int page = 1, int limit = 10, bool publishedOnly = true)
+        => await _languageRepository.GetListPagedAsync(query =>
+            {
+                if (publishedOnly)
+                    query = query.Where(w => w.Published);
 
-        var list = await query.OrderBy(o => o.DisplayOrder).Skip((page - 1) * limit).Take(limit).ToListAsync();
+                query = query.OrderBy(o => o.DisplayOrder).AsQueryable();
+                return Task.FromResult(query);
+            }, page - 1, limit);
 
-        return list;
-    }
+    public async Task<TbLanguage> InsertAsync(TbLanguage input) => await _languageRepository.InsertAsync(input, true);
 
-    public async Task<TbLanguage> InsertAsync(TbLanguage input)
-    {
-        var createdEntity = await _context.TbLanguages.AddAsync(input);
-        await _context.SaveChangesAsync();
-        return createdEntity.Entity;
-    }
+    public async Task<TbLanguage> UpdateAsync(TbLanguage input) => await _languageRepository.UpdateAsync(input, true);
 
-    public async Task<TbLanguage> UpdateAsync(TbLanguage input)
-    {
-        _context.TbLanguages.Update(input);
-        await _context.SaveChangesAsync();
-        return input;
-    }
+    public async Task DeleteAsync(TbLanguage input) => await _languageRepository.DeleteAsync(input, true);
 
-    public async Task<TbLanguage> DeleteAsync(TbLanguage input)
-    {
-        _context.TbLanguages.Remove(input);
-        await _context.SaveChangesAsync();
-        return input;
-    }
-
-    public async Task<TbLanguage> DeleteAsync(Guid id)
-    {
-        var entity = await _context.TbLanguages.FindAsync(id);
-        if (entity is null)
-            throw new Exception($"Language with id '{id}' not found.");
-        _context.TbLanguages.Remove(entity);
-        await _context.SaveChangesAsync();
-        return entity;
-    }
+    public async Task<bool> DeleteAsync(Guid id) => await _languageRepository.DeleteByIdAsync(id);
 
     #region [ Utilities ]
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Og.Commerce.Core\Og.Commerce.Core.csproj" />
-    <ProjectReference Include="..\Og.Commerce.Data\Og.Commerce.Data.csproj" />
   </ItemGroup>
 
 </Project>

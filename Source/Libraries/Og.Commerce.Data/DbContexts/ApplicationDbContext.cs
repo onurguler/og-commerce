@@ -1,15 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Og.Commerce.Core.Data.DbContexts;
 using Og.Commerce.Domain.Localization;
 
-namespace Og.Commerce.Infrastructure.Persistence.DataContexts;
+namespace Og.Commerce.Data.DbContexts;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : OgDbContext
 {
-    public ApplicationDbContext()
-    {
-
-    }
-    public ApplicationDbContext(DbContextOptions options) : base(options) { }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

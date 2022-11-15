@@ -1,12 +1,13 @@
 using Og.Commerce.Application.Localization;
-using Og.Commerce.Infrastructure;
+using Og.Commerce.Core;
+using Og.Commerce.Data;
 using Og.Commerce.Web.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddData(builder.Configuration);
 builder.Services.AddScoped<LanguageService>();
 builder.Services.AddScoped<SelectListUtility>();
 

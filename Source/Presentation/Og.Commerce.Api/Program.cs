@@ -1,5 +1,6 @@
 using Og.Commerce.Application.Localization;
-using Og.Commerce.Infrastructure;
+using Og.Commerce.Core;
+using Og.Commerce.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddData(builder.Configuration);
 builder.Services.AddScoped<LanguageService>();
 
 var app = builder.Build();
@@ -27,5 +28,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.ConfigureRequestPipeline();
 
 app.Run();

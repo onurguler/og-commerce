@@ -16,7 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Og.Commerce.Application\Og.Commerce.Application.csproj" />
-    <ProjectReference Include="..\..\Libraries\Og.Commerce.Infrastructure\Og.Commerce.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Libraries\Og.Commerce.Core\Og.Commerce.Core.csproj" />
+    <ProjectReference Include="..\..\Libraries\Og.Commerce.Data\Og.Commerce.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
