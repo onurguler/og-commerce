@@ -5,8 +5,6 @@ using Og.Commerce.Core.Data.Repositories;
 using Og.Commerce.Core.Domain;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
-using Og.Commerce.Core.Result;
-using Og.Commerce.Core.Extensions;
 
 namespace Og.Commerce.Application.Localization;
 
@@ -44,13 +42,7 @@ public class LanguageService : ApplicationService<ApplicationDbContext>
         CheckCultureIsValid(input.CultureName, true);
         await CheckUniqueSeoCodeAvailableAsync(input.UniqueSeoCode, input.Id, throwException: true);
 
-        language.CultureName = input.CultureName;
-        language.DisplayOrder = input.DisplayOrder;
-        language.FlagImageFileName = input.FlagImageFileName;
-        language.Name = input.Name;
-        language.Published = input.Published;
-        language.Rtl = input.Rtl;
-        language.UniqueSeoCode = input.UniqueSeoCode;
+        ObjectMapper.Map(input, language);
 
         _ = newRecord
             ? await _languageRepository.InsertAsync(language, true)

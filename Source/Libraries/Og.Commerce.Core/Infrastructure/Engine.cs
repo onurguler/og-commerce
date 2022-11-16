@@ -58,9 +58,9 @@ public class Engine : IEngine
     /// <param name="scope">Scope</param>
     /// <typeparam name="T">Type of resolved service</typeparam>
     /// <returns>Resolved service</returns>
-    public T? Resolve<T>(IServiceScope? scope = null) where T : class
+    public T Resolve<T>(IServiceScope? scope = null) where T : class
     {
-        return (T?)Resolve(typeof(T), scope);
+        return (T)Resolve(typeof(T), scope);
     }
 
     /// <summary>
@@ -69,9 +69,9 @@ public class Engine : IEngine
     /// <param name="type">Type of resolved service</param>
     /// <param name="scope">Scope</param>
     /// <returns>Resolved service</returns>
-    public object? Resolve(Type type, IServiceScope? scope = null)
+    public object Resolve(Type type, IServiceScope? scope = null)
     {
-        return GetServiceProvider(scope)?.GetService(type);
+        return GetServiceProvider(scope)?.GetService(type)!;
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public class Engine : IEngine
     /// <returns>Collection of resolved services</returns>
     public virtual IEnumerable<T> ResolveAll<T>()
     {
-        return (IEnumerable<T>)GetServiceProvider()?.GetServices(typeof(T)) ?? new List<T>();
+        return (IEnumerable<T>)GetServiceProvider()?.GetServices(typeof(T))! ?? new List<T>();
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ public class Engine : IEngine
                 });
 
                 //all is ok, so create instance
-                return Activator.CreateInstance(type, parameters.ToArray());
+                return Activator.CreateInstance(type, parameters.ToArray())!;
             }
             catch (Exception ex)
             {
@@ -124,7 +124,7 @@ public class Engine : IEngine
     /// <summary>
     /// Service provider
     /// </summary>
-    public virtual IServiceProvider ServiceProvider { get; protected set; }
+    public virtual IServiceProvider ServiceProvider { get; protected set; } = null!;
 
     #endregion
 }

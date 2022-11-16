@@ -1,3 +1,4 @@
+using Og.Commerce.Application;
 using Og.Commerce.Application.Localization;
 using Og.Commerce.Core;
 using Og.Commerce.Core.Infrastructure;
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddApplication();
 builder.Services.AddData(builder.Configuration);
 builder.Services.AddScoped<LanguageService>();
 builder.Services.AddHttpContextAccessor();

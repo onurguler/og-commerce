@@ -27,7 +27,7 @@ public interface IEngine
     /// <param name="scope">Scope</param>
     /// <typeparam name="T">Type of resolved service</typeparam>
     /// <returns>Resolved service</returns>
-    T? Resolve<T>(IServiceScope? scope = null) where T : class;
+    T Resolve<T>(IServiceScope? scope = null) where T : class;
 
     /// <summary>
     /// Resolve dependency
@@ -35,7 +35,7 @@ public interface IEngine
     /// <param name="type">Type of resolved service</param>
     /// <param name="scope">Scope</param>
     /// <returns>Resolved service</returns>
-    object? Resolve(Type type, IServiceScope? scope = null);
+    object Resolve(Type type, IServiceScope? scope = null);
 
     /// <summary>
     /// Resolve dependencies
