@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Og.Commerce.Application.Localization;
+using Og.Commerce.Core.Domain;
+using Og.Commerce.Domain.Localization;
 
 namespace Og.Commerce.Api.Controllers.Localization
 {
@@ -14,9 +16,45 @@ namespace Og.Commerce.Api.Controllers.Localization
             _languageService = languageService;
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<TbLanguage>> GetById([FromRoute] Guid id)
+        {
+            var result = await _languageService.GetByIdAsync(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IPagedList<TbLanguage>>> GetList([FromQuery] int page = 1, [FromQuery] int limit = 10)
+            => Ok(await _languageService.GetPagedListAsync(page, limit));
+
+        [HttpPost]
+        public async Task<ActionResult<TbLanguage>> Create([FromBody] LanguageUpsertDto input)
+        {
+            var result = await _languageService.UpsertAsync(input);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<TbLanguage>> Update([FromBody] LanguageUpsertDto input)
+        {
+            var result = await _languageService.UpsertAsync(input);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<TbLanguage>> Delete([FromRoute] Guid id)
+        {
+            await _languageService.DeleteAsync(id);
+            return NoContent();
+        }
+
         [HttpGet("cultures")]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
-        public ActionResult<List<CultureDto>> GetCultures() => _languageService.GetCultures();
+        public ActionResult<List<LanguageCultureDto>> GetCultures() => _languageService.GetCultures();
     }
 
     //[Route("api/[controller]")]

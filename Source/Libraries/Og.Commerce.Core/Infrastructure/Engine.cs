@@ -36,10 +36,11 @@ public class Engine : IEngine
     /// </summary>
     /// <param name="services">Collection of service descriptors</param>
     /// <param name="configuration">Configuration of the application</param>
-    public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+    public void ConfigureServices(IServiceCollection services)
     {
         //register engine
         services.AddSingleton<IEngine>(this);
+        services.AddSingleton(services);
     }
 
     /// <summary>

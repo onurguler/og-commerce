@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\Libraries\Og.Commerce.Application\Og.Commerce.Application.csproj" />
     <ProjectReference Include="..\..\Libraries\Og.Commerce.Core\Og.Commerce.Core.csproj" />
     <ProjectReference Include="..\..\Libraries\Og.Commerce.Data\Og.Commerce.Data.csproj" />
+    <ProjectReference Include="..\..\Libraries\Og.Commerce.Domain\Og.Commerce.Domain.csproj" />
   </ItemGroup>
 
 </Project>

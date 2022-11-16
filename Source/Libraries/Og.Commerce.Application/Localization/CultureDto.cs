@@ -1,12 +1,12 @@
 ﻿namespace Og.Commerce.Application.Localization;
 
-public class CultureDto
+public class LanguageCultureDto
 {
-    public string Name { get; set; }
-    public string EnglishName { get; set; }
-    public string DisplayName { get; set; }
-    public string NativeName { get; set; }
-    public string ThreeLetterISOLanguageName { get; set; }
-    public string TwoLetterISOLanguageName { get; set; }
-    public string IetfLanguageTag { get; set; }
+    public string Name { get; set; } = null!;
+    public string EnglishName { get; set; } = null!;
+    public string DisplayName { get; set; } = null!;
+    public string NativeName { get; set; } = null!;
+    public string ThreeLetterISOLanguageName { get; set; } = null!;
+    public string TwoLetterISOLanguageName { get; set; } = null!;
+    public string IetfLanguageTag { get; set; } = null!; 
 }

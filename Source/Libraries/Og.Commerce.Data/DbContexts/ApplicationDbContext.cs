@@ -12,7 +12,7 @@ public class ApplicationDbContext : OgDbContext
     {
         base.OnConfiguring(optionsBuilder);
 
-        optionsBuilder.UseSqlServer("Server=localhost;Database=OgCommerce;Trusted_Connection=True;");
+        optionsBuilder.UseSqlServer("Data Source=localhost;initial catalog=OgCommerce;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True;application name=OgCommerce;trustServerCertificate=true");
     }
     public DbSet<TbLanguage> TbLanguages => Set<TbLanguage>();
 }

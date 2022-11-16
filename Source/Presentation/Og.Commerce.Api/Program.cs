@@ -1,5 +1,6 @@
 using Og.Commerce.Application.Localization;
 using Og.Commerce.Core;
+using Og.Commerce.Core.Infrastructure;
 using Og.Commerce.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddData(builder.Configuration);
 builder.Services.AddScoped<LanguageService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddCors();
+
+//create engine and configure service provider
+var engine = EngineContext.Create();
+
+engine.ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
@@ -22,6 +30,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors(
+    options => options.AllowAnyOrigin().AllowAnyMethod()
+);
 
 app.UseHttpsRedirection();
 

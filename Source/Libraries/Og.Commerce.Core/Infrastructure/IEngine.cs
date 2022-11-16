@@ -1,11 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Og.Commerce.Core.Infrastructure;
 
@@ -19,8 +13,7 @@ public interface IEngine
     /// Add and configure services
     /// </summary>
     /// <param name="services">Collection of service descriptors</param>
-    /// <param name="configuration">Configuration of the application</param>
-    void ConfigureServices(IServiceCollection services, IConfiguration configuration);
+    void ConfigureServices(IServiceCollection services);
 
     /// <summary>
     /// Configure HTTP request pipeline
