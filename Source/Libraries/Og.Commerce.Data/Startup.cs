@@ -27,6 +27,7 @@ public static class Startup
                 var databaseSettings = provider.GetRequiredService<IOptionsSnapshot<DatabaseConfig>>().Value;
                 options.UseSqlServer(databaseSettings.ConnectionString);
             })
-            .AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+            .AddUnitOfWork<ApplicationDbContext>();
+      
     }
 }
