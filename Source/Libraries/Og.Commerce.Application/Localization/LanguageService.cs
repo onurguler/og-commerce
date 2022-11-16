@@ -5,6 +5,8 @@ using Og.Commerce.Core.Data.Repositories;
 using Og.Commerce.Core.Domain;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
+using Og.Commerce.Core.Result;
+using Og.Commerce.Core.Extensions;
 
 namespace Og.Commerce.Application.Localization;
 
@@ -50,8 +52,8 @@ public class LanguageService : ApplicationService<ApplicationDbContext>
         language.Rtl = input.Rtl;
         language.UniqueSeoCode = input.UniqueSeoCode;
 
-        _ = newRecord 
-            ? await _languageRepository.InsertAsync(language, true) 
+        _ = newRecord
+            ? await _languageRepository.InsertAsync(language, true)
             : await _languageRepository.UpdateAsync(language, true);
 
         return language;
