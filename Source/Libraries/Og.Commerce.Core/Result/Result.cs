@@ -1,5 +1,8 @@
-﻿namespace Og.Commerce.Core.Result;
+﻿using System.Text.Json.Serialization;
 
+namespace Og.Commerce.Core.Result;
+
+[Serializable]
 public class Result<T> : IResult
 {
     protected Result() { }
@@ -36,6 +39,7 @@ public class Result<T> : IResult
 
     public T Value { get; }
 
+    [JsonIgnore]
     public Type ValueType { get; private set; }
     public ResultStatus Status { get; protected set; } = ResultStatus.Ok;
     public bool IsSuccess => Status == ResultStatus.Ok;

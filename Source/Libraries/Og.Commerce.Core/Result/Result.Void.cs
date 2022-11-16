@@ -1,5 +1,6 @@
 ﻿namespace Og.Commerce.Core.Result;
 
+[Serializable]
 public class Result : Result<Result>
 {
     public Result() : base() { }

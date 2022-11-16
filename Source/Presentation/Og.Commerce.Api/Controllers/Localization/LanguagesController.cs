@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Og.Commerce.Application.Localization;
 using Og.Commerce.Core.Domain;
+using Og.Commerce.Core.Result;
 using Og.Commerce.Domain.Localization;
 
 namespace Og.Commerce.Api.Controllers.Localization
@@ -17,14 +18,14 @@ namespace Og.Commerce.Api.Controllers.Localization
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<TbLanguage>> GetById([FromRoute] Guid id)
+        public async Task<ActionResult<Result<TbLanguage>>> GetById([FromRoute] Guid id)
         {
             var result = await _languageService.GetByIdAsync(id);
             if (result == null)
             {
                 return NotFound();
             }
-            return Ok(result);
+            return Ok(Result.Success(result, "Kayıt olusturuldu"));
         }
 
         [HttpGet]
