@@ -30,7 +30,7 @@ namespace Og.Commerce.Api.Controllers.Localization
         }
 
         [HttpGet]
-        public async Task<ApiResponse<IPagedList<Language>>> GetList([FromQuery] int page = 1, [FromQuery] int limit = 10)
+        public async Task<ActionResult<IPagedList<Language>>> GetList([FromQuery] int page = 1, [FromQuery] int limit = 10)
             => Ok(await _languageService.GetPagedListAsync(page, limit));
 
         [HttpPost]
