@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Og.Commerce.Core.Data.Repositories;
 
-public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+public class EFRepository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     #region [ Fields ]
 
@@ -15,7 +15,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
     #region [ Ctor ]
 
-    public Repository(DbContext dbContext)
+    public EFRepository(DbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -98,7 +98,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         return await query.ToPagedListAsync(pageIndex, pageSize, getOnlyTotalCount, cancellationToken);
     }
 
-    public virtual async Task<bool> AnyAsync(bool includeDeleted = false, bool asNoTracking = false, CancellationToken cancellationToken = default)
+    public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
     {
         return await Table.AnyAsync(cancellationToken);
     }
@@ -108,7 +108,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         return await Table.AnyAsync(predicate, cancellationToken);
     }
 
-    public virtual async Task<int> CountAsync(bool includeDeleted = false, bool asNoTracking = false, CancellationToken cancellationToken = default)
+    public virtual async Task<int> CountAsync(CancellationToken cancellationToken = default)
     {
         return await Table.CountAsync(cancellationToken);
     }
@@ -118,7 +118,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         return await Table.CountAsync(predicate, cancellationToken);
     }
 
-    public virtual async Task<long> LongCountAsync(bool includeDeleted = false, bool asNoTracking = false, CancellationToken cancellationToken = default)
+    public virtual async Task<long> LongCountAsync(CancellationToken cancellationToken = default)
     {
         return await Table.LongCountAsync(cancellationToken);
     }
@@ -132,89 +132,39 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
     #region [ Transaction Methods ]
 
-    public virtual async Task<TEntity> InsertAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         var savedEntity = (await GetDbSet().AddAsync(entity, cancellationToken)).Entity;
-
-        if (autoSave)
-        {
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
-
         return savedEntity;
     }
 
-    public virtual async Task InsertManyAsync(IList<TEntity> entities, bool autoSave = false, CancellationToken cancellationToken = default)
+    public virtual async Task AddRangeAsync(IList<TEntity> entities, CancellationToken cancellationToken = default)
     {
         await GetDbSet().AddRangeAsync(entities, cancellationToken);
-
-        if (autoSave)
-        {
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
     }
 
-    public virtual async Task<TEntity> UpdateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+    public virtual TEntity Update(TEntity entity)
     {
         _dbContext.Attach(entity);
 
         var updatedEntity = _dbContext.Update(entity).Entity;
 
-        if (autoSave)
-        {
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
-
         return updatedEntity;
     }
 
-    public virtual async Task UpdateManyAsync(IList<TEntity> entities, bool autoSave = false, CancellationToken cancellationToken = default)
+    public virtual void UpdateRange(IList<TEntity> entities)
     {
         GetDbSet().UpdateRange(entities);
-
-        if (autoSave)
-        {
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
     }
 
-    public virtual async Task DeleteAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+    public virtual void Remove(TEntity entity)
     {
         GetDbSet().Remove(entity);
-
-        if (autoSave)
-        {
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
     }
 
-    public virtual async Task DeleteManyAsync(IList<TEntity> entities, bool autoSave = false, CancellationToken cancellationToken = default)
+    public virtual void RemoveRange(IList<TEntity> entities)
     {
         GetDbSet().RemoveRange(entities);
-
-        if (autoSave)
-        {
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
-    }
-
-    public virtual async Task<bool> DeleteByIdAsync<TKey>(TKey id, bool autoSave = false, CancellationToken cancellationToken = default) where TKey : notnull
-    {
-        var entity = await GetAsync(id, cancellationToken: cancellationToken);
-        if (entity == null)
-        {
-            return false;
-        }
-
-        await DeleteAsync(entity, autoSave, cancellationToken);
-        return true;
-    }
-
-    public virtual async Task DeleteByIdsAsync<TKey>(IList<TKey> ids, bool autoSave = false, CancellationToken cancellationToken = default) where TKey : notnull
-    {
-        var entities = await GetByIdsAsync(ids, cancellationToken: cancellationToken);
-
-        await DeleteManyAsync(entities, autoSave, cancellationToken);
     }
 
     #endregion

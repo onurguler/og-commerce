@@ -14,5 +14,5 @@ public class ApplicationDbContext : OgDbContext
 
         optionsBuilder.UseSqlServer("Data Source=localhost;initial catalog=OgCommerce;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True;application name=OgCommerce;trustServerCertificate=true");
     }
-    public DbSet<TbLanguage> TbLanguages => Set<TbLanguage>();
+    public DbSet<Language> Languages => Set<Language>();
 }

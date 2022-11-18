@@ -12,13 +12,13 @@ namespace Og.Commerce.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TbLanguages",
+                name: "Languages",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CultureName = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    UniqueSeoCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     FlagImageFileName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     Rtl = table.Column<bool>(type: "bit", nullable: false),
                     Published = table.Column<bool>(type: "bit", nullable: false),
@@ -26,13 +26,13 @@ namespace Og.Commerce.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TbLanguages", x => x.Id);
+                    table.PrimaryKey("PK_Languages", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TbLanguages_UniqueSeoCode",
-                table: "TbLanguages",
-                column: "UniqueSeoCode",
+                name: "IX_Languages_Slug",
+                table: "Languages",
+                column: "Slug",
                 unique: true);
         }
 
@@ -40,7 +40,7 @@ namespace Og.Commerce.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TbLanguages");
+                name: "Languages");
         }
     }
 }

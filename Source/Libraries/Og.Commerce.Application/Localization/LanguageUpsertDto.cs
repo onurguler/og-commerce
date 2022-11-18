@@ -13,17 +13,13 @@ public class LanguageUpsertDto
     [DisplayName("İsim")]
     public string Name { get; set; } = default!;
 
-    [MaxLength(100)]
-    [DisplayName("Yerel İsim")]
-    public string NativeName { get; set; } = default!;
-
     [MaxLength(5)]
     [DisplayName("Kültür")]
     public string CultureName { get; set; } = default!;
 
     [MaxLength(5)]
     [DisplayName("Benzersiz SEO Kodu")]
-    public string UniqueSeoCode { get; set; } = default!;
+    public string Slug { get; set; } = default!;
 
     [MaxLength(15)]
     [DisplayName("Bayrak Dosya İsmi")]

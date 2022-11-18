@@ -22,7 +22,7 @@ namespace Og.Commerce.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Og.Commerce.Domain.Localization.TbLanguage", b =>
+            modelBuilder.Entity("Og.Commerce.Domain.Localization.Language", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,17 +51,17 @@ namespace Og.Commerce.Data.Migrations
                     b.Property<bool>("Rtl")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UniqueSeoCode")
+                    b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueSeoCode")
+                    b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("TbLanguages");
+                    b.ToTable("Languages");
                 });
 #pragma warning restore 612, 618
         }

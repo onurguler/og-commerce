@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Og.Commerce.Application.Localization;
+using Og.Commerce.Core.AspNetCore;
 using Og.Commerce.Core.Domain;
 using Og.Commerce.Core.Result;
 using Og.Commerce.Domain.Localization;
@@ -10,15 +11,15 @@ namespace Og.Commerce.Api.Controllers.Localization
     [ApiController]
     public class LanguagesController : ControllerBase
     {
-        private readonly LanguageService _languageService;
+        private readonly LanguageAdminAppService _languageService;
 
-        public LanguagesController(LanguageService languageService)
+        public LanguagesController(LanguageAdminAppService languageService)
         {
             _languageService = languageService;
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<Result<TbLanguage>>> GetById([FromRoute] Guid id)
+        public async Task<ActionResult<Result<Language>>> GetById([FromRoute] Guid id)
         {
             var result = await _languageService.GetByIdAsync(id);
             if (result == null)
@@ -29,25 +30,25 @@ namespace Og.Commerce.Api.Controllers.Localization
         }
 
         [HttpGet]
-        public async Task<ActionResult<IPagedList<TbLanguage>>> GetList([FromQuery] int page = 1, [FromQuery] int limit = 10)
+        public async Task<ApiResponse<IPagedList<Language>>> GetList([FromQuery] int page = 1, [FromQuery] int limit = 10)
             => Ok(await _languageService.GetPagedListAsync(page, limit));
 
         [HttpPost]
-        public async Task<ActionResult<TbLanguage>> Create([FromBody] LanguageUpsertDto input)
+        public async Task<ActionResult<Language>> Create([FromBody] LanguageUpsertDto input)
         {
             var result = await _languageService.UpsertAsync(input);
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         [HttpPut]
-        public async Task<ActionResult<TbLanguage>> Update([FromBody] LanguageUpsertDto input)
+        public async Task<ActionResult<Language>> Update([FromBody] LanguageUpsertDto input)
         {
             var result = await _languageService.UpsertAsync(input);
             return Ok(result);
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<TbLanguage>> Delete([FromRoute] Guid id)
+        public async Task<ActionResult<Language>> Delete([FromRoute] Guid id)
         {
             await _languageService.DeleteAsync(id);
             return NoContent();

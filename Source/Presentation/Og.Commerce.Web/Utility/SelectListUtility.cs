@@ -5,9 +5,9 @@ namespace Og.Commerce.Web.Utility;
 
 public class SelectListUtility
 {
-    private readonly LanguageService _languageService;
+    private readonly LanguageAdminAppService _languageService;
 
-    public SelectListUtility(LanguageService languageService)
+    public SelectListUtility(LanguageAdminAppService languageService)
     {
         _languageService = languageService;
     }

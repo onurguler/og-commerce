@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddData(builder.Configuration);
-builder.Services.AddScoped<LanguageService>();
+builder.Services.AddScoped<LanguageAdminAppService>();
 builder.Services.AddScoped<SelectListUtility>();
 
 var app = builder.Build();

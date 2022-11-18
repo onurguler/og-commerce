@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Og.Commerce.Domain.Localization;
 
-[Index(nameof(UniqueSeoCode), IsUnique = true)]
-public class TbLanguage
+[Index(nameof(Slug), IsUnique = true)]
+public class Language
 {
     [Key]
     public Guid Id { get; set; }
@@ -16,7 +16,7 @@ public class TbLanguage
     public string CultureName { get; set; } = default!;
 
     [MaxLength(5)]
-    public string UniqueSeoCode { get; set; } = default!;
+    public string Slug { get; set; } = default!;
 
     [MaxLength(15)]
     public string? FlagImageFileName { get; set; }

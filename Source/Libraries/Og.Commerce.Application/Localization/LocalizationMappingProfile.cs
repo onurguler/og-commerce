@@ -7,7 +7,7 @@ internal class LocalizationMappingProfile : Profile
 {
     public LocalizationMappingProfile()
     {
-        CreateMap<TbLanguage, LanguageDto>().ReverseMap();
-        CreateMap<TbLanguage, LanguageUpsertDto>().ReverseMap();
+        CreateMap<Language, LanguageDto>().ReverseMap();
+        CreateMap<Language, LanguageUpsertDto>().ReverseMap();
     }
 }

@@ -53,7 +53,7 @@ public sealed class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext 
         var type = typeof(TEntity);
         if (!_repositories.ContainsKey(type))
         {
-            _repositories[type] = new Repository<TEntity>(_context);
+            _repositories[type] = new EFRepository<TEntity>(_context);
         }
 
         return (IRepository<TEntity>)_repositories[type];
